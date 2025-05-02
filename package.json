@@ -1,0 +1,10 @@
+{
+     "scripts": {
+          "dev": "concurrently \"cd frontend && npm run dev\" \"cd backend && npm run start\""
+     },
+     "dependencies": {
+          "concurrently": "^9.1.2"
+     },
+     "private": true,
+     "workspaces":["frontend","backend"]
+}
