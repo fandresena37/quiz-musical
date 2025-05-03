@@ -13,22 +13,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Genre{
+enum Genre {
   tous
   pop
   rock
   classique
   hip_hop
-  rap 
+  rap
 }
 
-model User{
+model User {
   id       String @id @default(cuid())
   username String
   password String
   email    String
   score    Int    @default(0)
-  genre    Genre @default(tous)
-  niveau   Int @default(1)
-  exp      Int @default(0)
+  genre    Genre  @default(tous)
+  niveau   Int    @default(1)
+  exp      Int    @default(0)
 }

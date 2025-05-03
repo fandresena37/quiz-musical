@@ -13,9 +13,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 export default function Login() {
-  
+  const navige = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState<{type:string,text:string}|null>(null);
 
@@ -23,7 +23,7 @@ export default function Login() {
         setIsLoading(true);
         setMessage(null);
         try {
-            const res = await fetch("https://your-secure-api/selectuser", { // Remplacer par une URL HTTPS sécurisée
+            const res = await fetch("http://127.0.0.1:3400/selectuser", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -37,7 +37,7 @@ export default function Login() {
             if (response.erreur) {
                 setMessage({ type: "error", text: "Nom d'utilisateur ou mot de passe incorrect." });
             } else {
-                setMessage({ type: "success", text: "Connexion réussie ! Redirection..." });
+                navige("/");
             }
         } catch {
             setMessage({ type: "error", text: "Une erreur est survenue. Veuillez réessayer." });
@@ -62,7 +62,7 @@ export default function Login() {
   return (
     <>
       <section className="w-screen h-screen flex">
-        <section className="xl:w-1/2 h-full bg-[#2D57FF] justify-center items-center hidden lg:flex lg:w-[45%] ">
+        <section className="xl:w-1/2 h-full bg-gradient-to-bl to-blue-500 from-violet-600 justify-center items-center hidden lg:flex lg:w-[45%] ">
           <Logo className="w-[55%] h-[55%] flex flex-col" />
         </section>
         <section className="xl:w-1/2 h-full flex justify-center lg:w-[55%] md:w-full sm:w-full w-full">
@@ -112,7 +112,7 @@ export default function Login() {
                 )}
               />
               <Button
-                className="w-full h-[50px] bg-[#2D57FF] rounded-full border-none text-lg font-bold cursor-pointer hover:bg-[#2b63ff] max-sm:h-[45px] max-sm:text-sm"
+                className="w-full h-[50px] bg-gradient-to-r to-blue-500 from-purple-600 rounded-full border-none text-lg font-bold cursor-pointer hover:bg-[#2b63ff] max-sm:h-[45px] max-sm:text-sm"
                 type="submit" 
                 disabled={isLoading}
                 >

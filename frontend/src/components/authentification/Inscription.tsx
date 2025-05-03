@@ -12,31 +12,37 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
+import { useState } from "react";
 export default function Inscription() {
-  const addCompte = async (values: z.infer<typeof SchemaLogin>) => {
-    console.log(values)
-    try {
-      const res = await fetch("http://127.0.0.1:3400/adduser", {
-        method: "POST",
-        headers: {
-          "content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: values.username,
-          password: values.password,
-          email: values.email,
-        }),
-      });
-      const response = await res.json();
-      console.log(response);
-      if (response.erreur) {
-        alert("Erreur");
-      } else {
-        alert("Succes");
-      }
-    } catch {
-      alert("Erreur");
-    }
+      const [isLoading, setIsLoading] = useState(false);
+      const [message, setMessage] = useState<{type:string,text:string}|null>(null);
+      const addCompte = async (values: z.infer<typeof SchemaLogin>) => {
+        setIsLoading(true);
+        setMessage(null);
+        try {
+            const res = await fetch("http://127.0.0.1:3400/adduser", { // Remplacer par une URL HTTPS sécurisée
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username: values.username,
+                    password: values.password,
+                    email: values.email,
+                }),
+            });
+            const response = await res.json();
+            console.log(response);
+            if (response.erreur) {
+                setMessage({ type: "error", text: "Nom d'utilisateur ou mot de passe incorrect." });
+            } else {
+                setMessage({ type: "success", text: "Utilisateur crée" });
+            }
+        } catch {
+            setMessage({ type: "error", text: "Une erreur est survenue. Veuillez réessayer." });
+        } finally {
+            setIsLoading(false);
+        }
   };
   const SchemaLogin = z.object({
     username: z.string().min(3, { message: "username invalide" }),
@@ -63,6 +69,11 @@ export default function Inscription() {
               <h1 className="text-[#2D57FF] font-extrabold lg:text-3xl xl:text-4xl 2xl:text-5xl max-sm:mb-4 mb-14 md:text-4xl sm:text-4xl text-3xl ">
                 INSCRIPTION
               </h1>
+              {message && (
+                <div className={`text-center p-3 rounded-lg ${message.type === "error" ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"}`}>
+                  {message.text}
+                </div>
+              )}
               <FormField
                 control={formLogin.control}
                 name="email"
@@ -116,16 +127,22 @@ export default function Inscription() {
                 )}
               />
               <Button
-                className="w-full h-[45px] bg-[#2D57FF] rounded-full border-none text-lg font-bold cursor-pointer hover:bg-[#2b63ff] max-sm:text-sm"
+                className="w-full h-[45px] bg-gradient-to-bl to-blue-500 from-violet-600 rounded-full border-none text-lg font-bold cursor-pointer hover:bg-[#2b63ff] max-sm:text-sm"
                 type="submit"
-              >
-                se connecter
+                disabled={isLoading}
+                >
+                    {isLoading ? (
+                        <svg className="animate-spin h-5 w-5 mr-2 text-white" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" strokeDasharray="15 85" />
+                        </svg>
+                    ) : null}
+                    s'inscrire
               </Button>
               <div className="flex gap-2 font-bold max-sm:text-sm">
                 <p className="text-gray-400 font-semibold">
                   J'ai déja un compte
                 </p>
-                <Link to="/login" className="text-[#2D57FF]">
+                <Link to="/login" className="bg-gradient-to-r to-blue-500 from-purple-600">
                   se connecter
                 </Link>
               </div>
