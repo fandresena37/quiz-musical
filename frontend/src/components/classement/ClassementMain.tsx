@@ -9,8 +9,42 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue,
-  } from "@/components/ui/select";
+} from "@/components/ui/select";
+  import {
+    Table,
+    TableBody,
+    // TableCaption,
+    TableCell,
+    // TableFooter,
+    TableHead,
+    TableHeader,
+    TableRow,
+  } from "@/components/ui/table";  
+
+
+  const rang = [
+    {
+      rang: "01",
+      profil: "FR",
+      nom: "fax",
+      Score: "2000",
+    },
+    {
+      rang: "02",
+      profil: "FX",
+      nom: "fandresena",
+      Score: "3000",
+    },
+    {
+      rang: "03",
+      profil: "FX",
+      nom: "propla",
+      Score: "4000",
+    }
+  ]  
 export default function ClassementMain(){
+
+    
     return (
         <>
             <section className="h-screen w-screen max-md:h-auto">
@@ -35,6 +69,31 @@ export default function ClassementMain(){
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>
+                        </section>
+                        <section>
+                        <Table>
+                            {/* <TableCaption>A list of your recent rangs.</TableCaption> */}
+                            <TableHeader>
+                                <TableRow>
+                                <TableHead>Rang</TableHead>
+                                <TableHead>Profil</TableHead>
+                                <TableHead>Nom</TableHead>
+                                <TableHead>Score</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {rang.map((rang) => (
+                                <TableRow key={rang.rang}>
+                                    <TableCell className="font-medium">{rang.rang}</TableCell>
+                                    <TableCell>
+                                        <img src="/public/Sample_User_Icon.png" alt="" className="w-10 h-10" />
+                                    </TableCell>
+                                    <TableCell>{rang.nom}</TableCell>
+                                    <TableCell>{rang.Score}</TableCell>
+                                </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
                         </section>
                     </section>
                 </section>
