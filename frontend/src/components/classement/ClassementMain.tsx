@@ -1,5 +1,6 @@
-import Footer from "../accueil/Footer";
+// import Footer from "../accueil/Footer";
 import Header from "../ui-quiz/Header";
+// import { Card } from "../ui/card";
 import { Input } from "../ui/input";
 import {
     Select,
@@ -10,37 +11,66 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-  import {
-    Table,
-    TableBody,
-    // TableCaption,
-    TableCell,
-    // TableFooter,
-    TableHead,
-    TableHeader,
-    TableRow,
-  } from "@/components/ui/table";  
+import ClassementMainItems from "./ClassementMainItems";
+//   import {
+//     Table,
+//     TableBody,
+//     // TableCaption,
+//     TableCell,
+//     // TableFooter,
+//     TableHead,
+//     TableHeader,
+//     TableRow,
+//   } from "@/components/ui/table";  
 
 
   const rang = [
     {
       rang: "01",
-      profil: "FR",
+      profil: "/public/Sample_User_Icon.png",
       nom: "fax",
-      Score: "2000",
+      score: "2000",
+      quiz:"40"
     },
     {
       rang: "02",
-      profil: "FX",
+      profil: "/public/Sample_User_Icon.png",
       nom: "fandresena",
-      Score: "3000",
+      score: "3000",
+      quiz:"40"
     },
     {
       rang: "03",
-      profil: "FX",
+      profil: "/public/Sample_User_Icon.png",
       nom: "propla",
-      Score: "4000",
-    }
+      score: "4000",
+      quiz:"40"
+    },
+    {
+        rang: "04",
+        profil: "/public/Sample_User_Icon.png",
+        nom: "propla",
+        score: "4000",
+        quiz:"40"
+      },{
+        rang: "05",
+        profil: "/public/Sample_User_Icon.png",
+        nom: "propla",
+        score: "4000",
+        quiz:"40"
+      },{
+        rang: "06",
+        profil: "/public/Sample_User_Icon.png",
+        nom: "propla",
+        score: "4000",
+        quiz:"40"
+      },{
+        rang: "07",
+        profil: "/public/Sample_User_Icon.png",
+        nom: "propla",
+        score: "4000",
+        quiz:"40"
+      }
   ]  
 export default function ClassementMain(){
 
@@ -49,14 +79,10 @@ export default function ClassementMain(){
         <>
             <section className="h-screen w-screen max-md:h-auto">
                 <Header/>
-                <section className=" w-full h-[calc(100%-60px)] flex justify-center items-center max-md:h-auto relative">
-                    <div className="absolute -z-20 w-full h-full">
-                        <section className="bg-gradient-to-bl to-blue-500 from-violet-600 w-full h-1/2"></section>
-                        <section className="bg-white w-full h-1/2"></section>
-                    </div>
-                    <section className="container bg-white rounded-2xl h-[85%] shadow-2xl">
-                        <section className="h-[80px] w-full flex p-6 justify-between">
-                            <Input className="w-[350px] placeholder:font-semibold placeholder:text-[16px] bg-gray-200" placeholder="recherche ..."/>
+                <section className=" w-full h-[calc(100%-60px)] flex justify-center items-center max-md:h-auto relative bg-gradient-to-bl to-blue-500 from-violet-600 px-20 gap-8">
+                    <section className="w-[78%] bg-white rounded-2xl h-[85%] shadow-2xl">
+                        <section className="h-[80px] w-full flex p-6 justify-between gap-2">
+                            <Input className="w-full placeholder:font-semibold placeholder:text-[16px] bg-gray-200" placeholder="recherche ..."/>
                             <Select>
                                 <SelectTrigger className="w-[180px] data-[placeholder]:font-semibold data-[placeholder]:text-sm bg-gray-200 font-semibold text-muted-foreground">
                                     <SelectValue placeholder="rang" />
@@ -70,35 +96,18 @@ export default function ClassementMain(){
                                 </SelectContent>
                             </Select>
                         </section>
-                        <section>
-                        <Table>
-                            {/* <TableCaption>A list of your recent rangs.</TableCaption> */}
-                            <TableHeader>
-                                <TableRow>
-                                <TableHead>Rang</TableHead>
-                                <TableHead>Profil</TableHead>
-                                <TableHead>Nom</TableHead>
-                                <TableHead>Score</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {rang.map((rang) => (
-                                <TableRow key={rang.rang}>
-                                    <TableCell className="font-medium">{rang.rang}</TableCell>
-                                    <TableCell>
-                                        <img src="/public/Sample_User_Icon.png" alt="" className="w-10 h-10" />
-                                    </TableCell>
-                                    <TableCell>{rang.nom}</TableCell>
-                                    <TableCell>{rang.Score}</TableCell>
-                                </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
+                        <section className="w-full h-[calc(100%-80px)] flex flex-col gap-2 overflow-y-auto px-6 pt-4">
+                            {rang.map((items)=>(
+                                <ClassementMainItems data={items} key={items.rang}/>
+                            ))}
                         </section>
+                    </section>
+                    <section className="w-[22%] h-[85%] bg-white rounded-2xl shadow-2xl"> 
+                        {/* <Card></Card> */}
                     </section>
                 </section>
             </section>
-            <Footer/>
+            {/* <Footer/> */}
         </>
     )
 }
